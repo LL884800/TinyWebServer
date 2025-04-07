@@ -12,25 +12,27 @@ using namespace std;
 
 connection_pool::connection_pool()
 {
+	// 初始化连接池的当前使用连接数和空闲连接数为 0
 	m_CurConn = 0;
 	m_FreeConn = 0;
 }
 
 connection_pool *connection_pool::GetInstance()
 {
-	static connection_pool connPool;
-	return &connPool;
+	// 提供一个单例模式的实例化方法
+	 static connection_pool connPool;  // 定义一个静态局部变量 connPool，确保只初始化一次
+	 return &connPool; //返回该静态实例的地址
 }
 
 //构造初始化
 void connection_pool::init(string url, string User, string PassWord, string DBName, int Port, int MaxConn, int close_log)
 {
-	m_url = url;
-	m_Port = Port;
-	m_User = User;
-	m_PassWord = PassWord;
-	m_DatabaseName = DBName;
-	m_close_log = close_log;
+	m_url = url; 	//数据库服务器地址
+	m_Port = Port;	
+	m_User = User;  //数据库用户名
+	m_PassWord = PassWord; //数据库密码
+	m_DatabaseName = DBName; //数据库名称
+	m_close_log = close_log; //是否关闭日志
 
 	for (int i = 0; i < MaxConn; i++)
 	{
